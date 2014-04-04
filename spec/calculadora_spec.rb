@@ -108,14 +108,15 @@ describe Calc do
 			subject.multiplicar(6).dividir(4).resultado.should eql 3.0
 		end
 
-	# 	describe "Quando encadear metodos" do
-	# 		it "Deveria dar prioridade a multiplicacao em relacao a somar" do
-	# 			subject.somar(2).somar(3).multiplicar(3).resultado.should eql 11
-	# 		end
-	# 		it "Deveria dar prioridade a mutiplicacao em relacao a subtrair" do
-	# 			subject.subtrair(2).subtrair(3).multiplicar(3).resultado.should eql -11
-	# 		end
-	# 	end
+		describe "Quando encadear metodos" do
+			it "Deveria dar prioridade a multiplicacao em relacao a somar" do
+				subject.somar(2).somar(3).multiplicar(3).resultado.should eql 11.0
+			end
+			it "Deveria dar prioridade a mutiplicacao em relacao a subtrair" do
+				subject.subtrair(2).subtrair(3).multiplicar(3).resultado.should eql -11.0
+			end
+		end
+
 		it "deveria reponder pelo método *" do
 			subject.should respond_to :*
 			subject.somar(2).*(2).resultado.should eql Calc.new.somar(2).multiplicar(2).resultado
@@ -186,14 +187,14 @@ describe Calc do
 			subject.dividir(6).dividir(2).resultado.should eql 1.0
 		end
 
-	# 	describe "Quando encadear metodos" do
-	# 		it "Deveria dar prioridade a dividir em relacao a somar" do
-	# 			subject.somar(10).somar(9).dividir(3).resultado.should eql 13
-	# 		end
-	# 		it "Deveria dar prioridade a dividir em relacao a subtrair" do
-	# 			subject.subtrair(10).subtrair(9).dividir(3).resultado.should eql -13
-	# 		end
-	# 	end
+		describe "Quando encadear metodos" do
+			it "Deveria dar prioridade a dividir em relacao a somar" do
+				subject.somar(10).somar(9).dividir(3).resultado.should eql 13.0
+			end
+			it "Deveria dar prioridade a dividir em relacao a subtrair" do
+				subject.subtrair(10).subtrair(9).dividir(3).resultado.should eql -13.0
+			end
+		end
 		it "deveria reponder pelo método /" do
 			subject.should respond_to :/
 			subject.somar(2)./(2).resultado.should eql Calc.new.somar(2).dividir(2).resultado
