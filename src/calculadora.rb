@@ -26,31 +26,17 @@ class Calc
 		@pilha[-1] /= num.to_f
 
 		vartemp = @pilharesultado[-1]
-		stringtemp = "(  #{vartemp}  /  #{num}  )"  #cria a string
+		stringtemp = "(  #{vartemp}  /  #{num}  )"
 		@pilharesultado[-1] = (stringtemp)
-		# @pilharesultado[-1] = "("
-		# @pilharesultado.push(vartemp)
-		# @pilharesultado.push(:/)
-		# @pilharesultado.push(num)
-		# @pilharesultado.push(")")
-
-
 		raise ZeroDivisionError.new if @pilha[-1].nan?
 		self
 	end
 
 	def *(num)
 		@pilha[-1] *= num.to_f
-
-		vartemp = @pilharesultado[-1] #busca a variavel
-		stringtemp = "(  #{vartemp}  *  #{num}  )"  #cria a string
+		vartemp = @pilharesultado[-1]
+		stringtemp = "(  #{vartemp}  *  #{num}  )"
 		@pilharesultado[-1] = (stringtemp)
-
-		# @pilharesultado[-1] = "("
-		# @pilharesultado.push(vartemp)
-		# @pilharesultado.push(:*)
-		# @pilharesultado.push(num)
-		# @pilharesultado.push(")")
 		self
 	end
 
@@ -64,9 +50,7 @@ class Calc
 		end
 		@strinresult << "=  %.3f" % self.resultado.to_s
 	end
-
-
-
+	
 	alias_method :somar, :+
 	alias_method :subtrair, :-
 	alias_method :multiplicar, :*
