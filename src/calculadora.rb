@@ -1,46 +1,34 @@
 class Calc
 	
-	attr_reader :pilha
-
 	def initialize valor = 0.0
 		@pilha = []
 		@pilha.push(valor.to_f)
 	end
 	
-	def +(num) #recebe objetos
+	def +(num)
 		@pilha.push num.to_f
 		self
 	end
 
 	def -(num)
 		@pilha.push (-1 * num).to_f
-		# @valor -= num
 		self
 	end
 
 	def /(num)
-		#@pilha.push(Operacao.new(:/, num))
-		# @valor = @valor/num
 		@pilha[-1] /= num.to_f
 		raise ZeroDivisionError.new if @pilha[-1].nan?
 		self
 	end
 
-	def *(num) #atualizar o valor da pilha com o valor passado
-		#@pilha.push(Operacao.new(:*, num)) 
-		# @valor *= num
+	def *(num)
 		@pilha[-1] *= num.to_f
 		self
 	end
 
 	def resultado
-		soma = 0
-		@pilha.each do |i|
-			soma += i
-		end
-		soma
+		@pilha.inject(:+)
 	end
-
 
 	alias_method :somar, :+
 	alias_method :subtrair, :-
