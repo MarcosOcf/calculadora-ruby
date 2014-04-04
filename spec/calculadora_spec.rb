@@ -16,35 +16,34 @@ describe Calc do
 	describe "+" do
 		subject { Calc.new }
 
-		it "deveria incrementar o valor da calculadora com o valor recebido" do
+		it "Deveria incrementar o valor da calculadora com o valor recebido" do
 			subject.somar 10
 			subject.somar 5			
 			subject.resultado.should eql 15.0
 		end
 
-		it "deveria permitir encadear outro somar" do
+		it "Deveria permitir encadear outro somar" do
 			subject.somar(10).somar(2)
 			subject.resultado.should eql 12.0
 		end
 
-		it "deveria permitir encadear subtrair" do
+		it "Deveria permitir encadear subtrair" do
 			subject.somar(10).subtrair(2)
 			subject.resultado.should eql 8.0
 		end
 
-		it "deveria permitir encadear multiplicar" do
+		it "Deveria permitir encadear multiplicar" do
 			subject.somar(2).multiplicar(3).resultado.should eql 6.0
 		end
 
-		it "deveria permitir encadear dividir" do
+		it "Deveria permitir encadear dividir" do
 			subject.somar(2).dividir(2).resultado.should eql 1.0
 		end
 
-		it "deveria reponder pelo método +" do
+		it "Deveria reponder pelo método +" do
 			subject.should respond_to :+
 			subject.+(2).resultado.should eql Calc.new.somar(2).resultado
 		end
-
 	end
 
 	describe "-" do
@@ -68,23 +67,22 @@ describe Calc do
 		it "Deveria permitir encadear dividir" do
 			subject.subtrair(10).dividir(2).resultado.should eql -5.0
 		end
-		it "deveria reponder pelo método -" do
+		it "Deveria reponder pelo método -" do
 			subject.should respond_to :-
 			subject.-(2).resultado.should eql Calc.new.subtrair(2).resultado
 		end
 	end
-	describe "*" do
-		
+
+	describe "*" do	
 		subject { Calc.new }
 
 		describe "Quando o valor recebido for zero" do
-			
 			it "Deveria ter zero como resultado" do
 				subject.somar(2)
 				subject.multiplicar(0).resultado.should eql 0.0
 			end
 
-			describe "quando o valor acumulado for zero" do
+			describe "Quando o valor acumulado for zero" do
 				it "Deveria ter zero como resultado" do
 					subject.multiplicar(0).resultado.should eql 0.0
 				end
@@ -95,14 +93,17 @@ describe Calc do
 			subject.somar(2)
 			subject.multiplicar(2).somar(3).resultado.should eql 7.0
 		end
+
 		it "Deveria permitir encadear subtrair" do
 			subject.somar(2)
 			subject.multiplicar(2).subtrair(3).resultado.should eql 1.0
 		end
+
 		it "Deveria permitir encadear multiplicar" do
 			subject.somar(2)
 			subject.multiplicar(2).multiplicar(3).resultado.should eql 12.0
 		end
+
 		it "Deveria permitir encadear dividir" do
 			subject.somar(2)
 			subject.multiplicar(6).dividir(4).resultado.should eql 3.0
@@ -117,14 +118,13 @@ describe Calc do
 			end
 		end
 
-		it "deveria reponder pelo método *" do
+		it "Deveria reponder pelo método *" do
 			subject.should respond_to :*
 			subject.somar(2).*(2).resultado.should eql Calc.new.somar(2).multiplicar(2).resultado
 		end
  end
 
 	describe "/" do
-
 		describe "Quando o valor acumulado for um inteiro" do
 			describe "E o valor passado for inteiro, com resultado inteiro" do
 				it "Deveria dividir o valor da calculadora pelo valor aculumado" do
@@ -167,21 +167,23 @@ describe Calc do
 				-> { subject.dividir(0) }.should raise_error ZeroDivisionError
 			end
 		end
+	
 
-	end
-
-	it "Deveria permitir encadear soma" do
+		it "Deveria permitir encadear soma" do
 			subject.somar(2)
 			subject.dividir(2).resultado.should eql 1.0
 		end
+
 		it "Deveria permitir encadear subtrair" do
 			subject.somar(2)
 			subject.dividir(2).subtrair(3).resultado.should eql -2.0
 		end
+		
 		it "Deveria permitir encadear multiplicar" do
 			subject.somar(2)
 			subject.dividir(2).multiplicar(2).resultado.should eql 2.0
 		end
+		
 		it "Deveria permitir encadear dividir" do
 			subject.somar(12)
 			subject.dividir(6).dividir(2).resultado.should eql 1.0
@@ -191,18 +193,36 @@ describe Calc do
 			it "Deveria dar prioridade a dividir em relacao a somar" do
 				subject.somar(10).somar(9).dividir(3).resultado.should eql 13.0
 			end
+		
 			it "Deveria dar prioridade a dividir em relacao a subtrair" do
 				subject.subtrair(10).subtrair(9).dividir(3).resultado.should eql -13.0
 			end
 		end
-		it "deveria reponder pelo método /" do
+
+		
+		it "Deveria reponder pelo método /" do
 			subject.should respond_to :/
 			subject.somar(2)./(2).resultado.should eql Calc.new.somar(2).dividir(2).resultado
 		end
+	end
+	
 	describe "resultado" do
-		it "deveria retornar o valor atual" do
+		it "Deveria retornar o valor atual" do
 			Calc.new.resultado.should eql 0.0
 			Calc.new(20).resultado.should eql 20.0
+		end
+	end
+
+	describe "formatar" do
+		describe "Quando nao for passado parametro" do
+
+			it "Deveria exibir o formato de equacoes com parenteses e resultado" do
+				Calc.new.somar(2).somar(4).multiplicar(2).subtrair(3).formatar.should eql "0.0  +  2  +  (  4  *  2  )  -  3  =  7.000"
+			end
+
+			it "Deveria encadear multiplicacoes e dvisoes criando parenteses" do
+				Calc.new.somar(2).somar(4).multiplicar(2).multiplicar(3).formatar.should eql "0.0  +  2  +  (  (  4  *  2  )  *  3  )  =  26.000"
+			end
 		end
 	end
 end
