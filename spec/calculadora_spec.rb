@@ -224,5 +224,57 @@ describe Calc do
 				Calc.new.somar(2).somar(4).multiplicar(2).multiplicar(3).formatar.should eql "0.0  +  2  +  (  (  4  *  2  )  *  3  )  =  26.000"
 			end
 		end
+		# describe "Quando for passado o simbolo pretty" do
+
+		# 	it "Deveria exibir o formato de equacoes na vertical" do
+		# 		Calc.new.somar(2).somar(4).multiplicar(2).multiplicar(3).formatar.should eql "  0.0  \n+  2  \n+  4  \n*  2   \n*  3 \n------- \n=  26.000"
+		# 	end
+		# end
 	end
+
+	describe "exp" do
+		it "deveria permitir a criação de expressões" do
+			calc = Calc.new
+			calc.somar(2).multiplicar(2)
+			calc.exp do |c| 
+				c + 1
+				c - 1
+				c * 2
+			end
+			calc.formatar.should eql %Q{0.0  +  (  2  *  2  )  +  (  +  1  -  (  1  *  2  )  )  =  3.000}
+			
+		end
+	end
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
