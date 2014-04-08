@@ -1,20 +1,19 @@
 require "spec_helper"
-require_relative "../src/calculadora.rb"
 
-describe Calc do
+describe Calculadora::Calc do
 	
 	describe "inicializacao" do
 		it "deveria comecar com o valor zero" do
-			Calc.new.resultado.should eql 0.0
+			Calculadora::Calc.new.resultado.should eql 0.0
 		end
 
 		it "deveria permitir configurar o valor inicial" do
-			Calc.new(20).resultado.should eql 20.0
+			Calculadora::Calc.new(20).resultado.should eql 20.0
 		end
 	end
 
 	describe "+" do
-		subject { Calc.new }
+		subject { Calculadora::Calc.new }
 
 		it "Deveria incrementar o valor da calculadora com o valor recebido" do
 			subject.somar 10
@@ -42,12 +41,12 @@ describe Calc do
 
 		it "Deveria reponder pelo método +" do
 			subject.should respond_to :+
-			subject.+(2).resultado.should eql Calc.new.somar(2).resultado
+			subject.+(2).resultado.should eql Calculadora::Calc.new.somar(2).resultado
 		end
 	end
 
 	describe "-" do
-		subject { Calc.new }
+		subject { Calculadora::Calc.new }
 
 		it "Deveria subtrair o valor da calculadora com o valor recebido" do
 			subject.subtrair(2).resultado.should eql -2.0
@@ -69,12 +68,12 @@ describe Calc do
 		end
 		it "Deveria reponder pelo método -" do
 			subject.should respond_to :-
-			subject.-(2).resultado.should eql Calc.new.subtrair(2).resultado
+			subject.-(2).resultado.should eql Calculadora::Calc.new.subtrair(2).resultado
 		end
 	end
 
 	describe "*" do	
-		subject { Calc.new }
+		subject { Calculadora::Calc.new }
 
 		describe "Quando o valor recebido for zero" do
 			it "Deveria ter zero como resultado" do
@@ -120,7 +119,7 @@ describe Calc do
 
 		it "Deveria reponder pelo método *" do
 			subject.should respond_to :*
-			subject.somar(2).*(2).resultado.should eql Calc.new.somar(2).multiplicar(2).resultado
+			subject.somar(2).*(2).resultado.should eql Calculadora::Calc.new.somar(2).multiplicar(2).resultado
 		end
  end
 
@@ -202,14 +201,14 @@ describe Calc do
 		
 		it "Deveria reponder pelo método /" do
 			subject.should respond_to :/
-			subject.somar(2)./(2).resultado.should eql Calc.new.somar(2).dividir(2).resultado
+			subject.somar(2)./(2).resultado.should eql Calculadora::Calc.new.somar(2).dividir(2).resultado
 		end
 	end
 	
 	describe "resultado" do
 		it "Deveria retornar o valor atual" do
-			Calc.new.resultado.should eql 0.0
-			Calc.new(20).resultado.should eql 20.0
+			Calculadora::Calc.new.resultado.should eql 0.0
+			Calculadora::Calc.new(20).resultado.should eql 20.0
 		end
 	end
 
@@ -217,24 +216,24 @@ describe Calc do
 		describe "Quando nao for passado parametro" do
 
 			it "Deveria exibir o formato de equacoes com parenteses e resultado" do
-				Calc.new.somar(2).somar(4).multiplicar(2).subtrair(3).formatar.should eql "0.0  +  2  +  (  4  *  2  )  -  3  =  7.000"
+				Calculadora::Calc.new.somar(2).somar(4).multiplicar(2).subtrair(3).formatar.should eql "0.0  +  2  +  (  4  *  2  )  -  3  =  7.000"
 			end
 
 			it "Deveria encadear multiplicacoes e dvisoes criando parenteses" do
-				Calc.new.somar(2).somar(4).multiplicar(2).multiplicar(3).formatar.should eql "0.0  +  2  +  (  (  4  *  2  )  *  3  )  =  26.000"
+				Calculadora::Calc.new.somar(2).somar(4).multiplicar(2).multiplicar(3).formatar.should eql "0.0  +  2  +  (  (  4  *  2  )  *  3  )  =  26.000"
 			end
 		end
 		# describe "Quando for passado o simbolo pretty" do
 
 		# 	it "Deveria exibir o formato de equacoes na vertical" do
-		# 		Calc.new.somar(2).somar(4).multiplicar(2).multiplicar(3).formatar.should eql "  0.0  \n+  2  \n+  4  \n*  2   \n*  3 \n------- \n=  26.000"
+		# 		Calculadora::Calc.new.somar(2).somar(4).multiplicar(2).multiplicar(3).formatar.should eql "  0.0  \n+  2  \n+  4  \n*  2   \n*  3 \n------- \n=  26.000"
 		# 	end
 		# end
 	end
 
 	describe "exp" do
 		it "deveria permitir a criação de expressões" do
-			calc = Calc.new
+			calc = Calculadora::Calc.new
 			calc.somar(2).multiplicar(2)
 			calc.exp do |c| 
 				c + 1
@@ -242,10 +241,25 @@ describe Calc do
 				c * 2
 			end
 			calc.formatar.should eql %Q{0.0  +  (  2  *  2  )  +  (  +  1  -  (  1  *  2  )  )  =  3.000}
-			
+		end
+		it "Deveria permitir criar a calculadora utilizando expressoes" do
+			calc = Calculadora::Calc.new
+			calc.exp do |c| 
+				c + 1
+				c - 1
+				c * 2
+			end
+			calc.formatar.should eql %Q{0.0  +  (  +  1  -  (  1  *  2  )  )  =  -1.000}
+		end
+		it "Deveria permitir encadear exp's" do
+			calc = Calculadora::Calc.new
+			calc.exp do |c| 
+				c.+(1).-(1).*(2)
+				c.-(1)./(2)
+			end
+			calc.formatar.should eql %Q{0.0  +  (  +  1  -  (  1  *  2  )  -  (  1  /  2  )  )  =  -1.500}
 		end
 	end
-
 end
 
 
