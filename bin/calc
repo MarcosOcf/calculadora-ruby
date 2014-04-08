@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'calculadora'
+puts Calculadora::Command.new(ARGV).formatar

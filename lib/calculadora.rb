@@ -1,5 +1,6 @@
 require "calculadora/version"
 require "calculadora/calc"
+require "calculadora/command"
 
 module Calculadora
 
