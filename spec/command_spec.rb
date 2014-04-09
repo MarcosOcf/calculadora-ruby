@@ -20,7 +20,8 @@ describe Calculadora::Command do
 
 		context "quando não informar nada" do
 			it "deveria exibir o help" do
-				Calculadora::Command.new.formatar.should eql "\tDigite a expressão desejada entre aspas \n \tutilizando os operadoes +, -, *, / \n para obter a expressão formatada com resultado"
+				array = nil
+				Calculadora::Command.new(array).formatar.should eql "\tDigite a expressão desejada entre aspas \n \tutilizando os operadoes +, -, *, / \n \tpara obter a expressão formatada com resultado"
 			end
 		end
 		context "quando os operadores estiverem separados dos numeros" do

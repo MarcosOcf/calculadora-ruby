@@ -1,22 +1,25 @@
 module Calculadora
 	class Command
-		def initialize str = "help"
-			array_char = str.chars
-			array_char.delete(nil)
-			array_char.delete(" ")
-			array_char.delete("")
+		def initialize str 
 
-			if array_char != ["h","e","l","p"]
-				@c = Calc.new
-				self.enviar_calc!(array_char)
-			else
+			if str == nil
 				@help = true
+			else 
+				array_char = str.chars
+				#array_char.delete(nil)
+				array_char.delete(" ")
+				array_char.delete("")
+				if array_char.join == "help"
+					@help = true
+				else 				
+					@c = Calc.new
+					self.enviar_calc!(array_char)
+				end
 			end
-
 		end
 
 		def texto_help
-		  "\tDigite a expressão desejada entre aspas \n \tutilizando os operadoes +, -, *, / \n para obter a expressão formatada com resultado"
+		  "\tDigite a expressão desejada entre aspas \n \tutilizando os operadoes +, -, *, / \n \tpara obter a expressão formatada com resultado"
 		end
 
 		def formatar
