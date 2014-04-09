@@ -1,6 +1,6 @@
 module Calculadora
   class Calc
-    
+
     def initialize valor = 0.0
      @pilha = []
      @pilha_resultado = []
@@ -8,7 +8,7 @@ module Calculadora
      @pilha_resultado.push(valor)
      @string_result = ""
    end
-   
+
    def +(num)
      @pilha.push num.to_f
      @pilha_resultado.push(:+)
@@ -55,7 +55,7 @@ module Calculadora
 
  def formatar modo = nil		
    if modo == :pretty
-    
+
    else
     @string_result = formatar_sem_resultado
     @string_result << "=  %.3f" % self.resultado.to_s
@@ -77,35 +77,35 @@ module Calculadora
 			end
 			expressao_parcial = expressao.send :formatar_sem_resultado
 			@pilha_resultado.push("#{operacao}  (")
-                           @pilha_resultado.push("#{expressao_parcial})") 
-                           self
+      @pilha_resultado.push("#{expressao_parcial})") 
+      self
 
-                           case operacao
-                           when :+
-                            @pilha.push(expressao.resultado)
-                          when :-
-                            @pilha.push(expressao.resultado*-1)
-                          when :/
-                            @pilha.push(dividir(expressao.resultado))
-                          when :*
-                            @pilha.push(multiplicar(expressao.resultado))
-                          end
-                        end
+      case operacao
+      when :+
+        @pilha.push(expressao.resultado)
+      when :-
+        @pilha.push(expressao.resultado*-1)
+      when :/
+        @pilha.push(dividir(expressao.resultado))
+      when :*
+        @pilha.push(multiplicar(expressao.resultado))
+      end
+    end
 
-                        alias_method :somar, :+
-                        alias_method :subtrair, :-
-                        alias_method :multiplicar, :*
-                        alias_method :dividir, :/
+    alias_method :somar, :+
+    alias_method :subtrair, :-
+    alias_method :multiplicar, :*
+    alias_method :dividir, :/
 
-                        private
-                        def formatar_sem_resultado
-                         string = ""
-                         for i in @pilha_resultado
-                          string << "#{i.to_s}  "  
-                        end
-                        string
-                      end
+    private
+    def formatar_sem_resultado
+     string = ""
+     for i in @pilha_resultado
+      string << "#{i.to_s}  "  
+    end
+    string
+  end
 
-                    end
-                  end
+end
+end
 
